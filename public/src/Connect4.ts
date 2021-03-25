@@ -1,44 +1,13 @@
-import { Modal } from './Modal.js';
+export type CellStatus = '' | 'red' | 'blue';
+export type Color = 'red' | 'blue';
+export type Mode = 'offline' | 'online';
 
-type CellStatus = '' | 'red' | 'blue';
-type Color = 'red' | 'blue';
-
-export class Connect4 {
-  private board: CellStatus[][] = this.generateGameBoard();
-  private color: Color = 'red';
-
-  static createConnect4({ root, modal }): Connect4 {
-    return new Connect4(
-      document.getElementById(root),
-      new Modal(document.getElementById(modal))
-    );
-  }
-
-  constructor(private root: Element, private modal: Modal) {
-    this.modal.hide();
-
-    this.modal.rematchBtns
-      .querySelector('#rematch')
-      .addEventListener('click', this.rematch);
-
-    this.root.querySelectorAll('.circle').forEach(cell => {
-      cell.addEventListener('click', ({ target }) => {
-        //target here is the circle because it is the element I click
-        //I have to specify target type in typescript to use its props
-        const target1 = target as HTMLTableDataCellElement;
-        const col = parseInt(target1.dataset.column);
-        const row = this.cellToBeUsed(col);
-        if (row >= 0) {
-          this.board[row][col] = this.color;
-          this.root
-            .querySelector(`[data-row='${row}'][data-column='${col}']`)
-            .classList.add(this.color);
-          this.determineWin(row, col);
-          this.color = this.color === 'red' ? 'blue' : 'red';
-        }
-      });
-    });
-  }
+export abstract class Connect4 {
+  protected board: CellStatus[][] = this.generateGameBoard();
+  abstract color: CellStatus;
+  abstract myColor: Color;
+  abstract modal;
+  abstract root: Element;
 
   generateGameBoard(): CellStatus[][] {
     return [...Array(6).keys()].map(row => {
@@ -55,14 +24,20 @@ export class Connect4 {
     return -1;
   }
 
-  determineWin(row: number, col: number): void {
+  determineWin(row: number, col: number, mode: Mode): void {
     if (
       this.checkRow(row) ||
       this.checkColumn(col) ||
       this.checkUpDiagonal(row, col) ||
       this.checkDownDiagonal(row, col)
     ) {
-      this.finish(`${this.color.toUpperCase()} won`, this.color);
+      if (mode === 'offline') {
+        this.finish(`${this.color.toUpperCase()} wins`, this.color);
+      } else {
+        const msg = this.color === this.myColor ? 'You Won' : 'You lost';
+        const color = this.color === this.myColor ? 'green' : 'red';
+        this.finish(msg, color);
+      }
     } else if (row === 0) {
       this.determineDraw();
     }
@@ -81,7 +56,7 @@ export class Connect4 {
       text,
       color,
     });
-    this.root.classList.add('finished');
+    this.root.classList.add('stop');
   }
 
   checkRow(row: number): boolean {
@@ -153,14 +128,4 @@ export class Connect4 {
     }
     return false;
   }
-
-  rematch = (): void => {
-    this.board = this.generateGameBoard();
-    this.color = 'red';
-    this.root.classList.remove('finished');
-    this.modal.hide();
-    this.root.querySelectorAll('.circle').forEach(circle => {
-      circle.className = 'circle';
-    });
-  };
 }

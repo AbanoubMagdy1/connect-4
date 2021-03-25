@@ -1,7 +1,7 @@
-import { Connect4 } from './Connect4.js';
+import { OfflineConnect4 } from './OfflineConnect4.js';
 
 const offline = document.getElementById('offline');
 
 offline.addEventListener('click', () => {
-  Connect4.createConnect4({ root: 'table', modal: 'modal' });
+  OfflineConnect4.createConnect4({ root: 'table', modal: 'modal' });
 });
