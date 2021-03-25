@@ -1,0 +1,55 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  box-sizing: border-box;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+td {
+  width: 70px;
+  height: 70px;
+  border: 1px solid black;
+  margin: 4px;
+}
+
+td .circle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+td .circle.red,
+td .circle.blue {
+  cursor: default;
+  pointer-events: none;
+}
+
+table {
+  border-spacing: 5px;
+}
+
+table.finished {
+  pointer-events: none;
+}
+
+.circle.red {
+  background-color: red;
+}
+
+.circle.blue {
+  background-color: blue;
+}

@@ -1,0 +1,16 @@
+{
+  "name": "connect4",
+  "version": "1.0.0",
+  "description": "connect4 game with offline and online modes",
+  "main": "index.js",
+  "type" : "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Abanoub Magdy",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1",
+    "socket.io": "^4.0.0"
+  }
+}
