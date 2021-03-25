@@ -1,9 +1,24 @@
+import { Modal } from './Modal.js';
 export class Connect4 {
-    constructor(root) {
+    constructor(root, modal) {
         this.root = root;
+        this.modal = modal;
         this.board = this.generateGameBoard();
         this.color = 'red';
-        this.root.querySelectorAll('td').forEach(cell => {
+        this.rematch = () => {
+            this.board = this.generateGameBoard();
+            this.color = 'red';
+            this.root.classList.remove('finished');
+            this.modal.hide();
+            this.root.querySelectorAll('.circle').forEach(circle => {
+                circle.className = 'circle';
+            });
+        };
+        this.modal.hide();
+        this.modal.rematchBtns
+            .querySelector('#rematch')
+            .addEventListener('click', this.rematch);
+        this.root.querySelectorAll('.circle').forEach(cell => {
             cell.addEventListener('click', ({ target }) => {
                 //target here is the circle because it is the element I click
                 //I have to specify target type in typescript to use its props
@@ -20,6 +35,9 @@ export class Connect4 {
                 }
             });
         });
+    }
+    static createConnect4({ root, modal }) {
+        return new Connect4(document.getElementById(root), new Modal(document.getElementById(modal)));
     }
     generateGameBoard() {
         return [...Array(6).keys()].map(row => {
@@ -39,9 +57,25 @@ export class Connect4 {
             this.checkColumn(col) ||
             this.checkUpDiagonal(row, col) ||
             this.checkDownDiagonal(row, col)) {
-            console.log(`${this.color.toUpperCase()} won`);
-            this.root.classList.add('finished');
+            this.finish(`${this.color.toUpperCase()} won`, this.color);
         }
+        else if (row === 0) {
+            this.determineDraw();
+        }
+    }
+    determineDraw() {
+        const isDraw = this.board.every(row => row.every(cell => cell));
+        if (isDraw) {
+            this.finish(`DRAW`, 'gray');
+        }
+    }
+    finish(text, color) {
+        this.modal.show();
+        this.modal.handlewinner({
+            text,
+            color,
+        });
+        this.root.classList.add('finished');
     }
     checkRow(row) {
         let counter = 0;

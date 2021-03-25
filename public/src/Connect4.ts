@@ -1,3 +1,5 @@
+import { Modal } from './Modal.js';
+
 type CellStatus = '' | 'red' | 'blue';
 type Color = 'red' | 'blue';
 
@@ -5,8 +7,21 @@ export class Connect4 {
   private board: CellStatus[][] = this.generateGameBoard();
   private color: Color = 'red';
 
-  constructor(private root: Element) {
-    this.root.querySelectorAll('td').forEach(cell => {
+  static createConnect4({ root, modal }): Connect4 {
+    return new Connect4(
+      document.getElementById(root),
+      new Modal(document.getElementById(modal))
+    );
+  }
+
+  constructor(private root: Element, private modal: Modal) {
+    this.modal.hide();
+
+    this.modal.rematchBtns
+      .querySelector('#rematch')
+      .addEventListener('click', this.rematch);
+
+    this.root.querySelectorAll('.circle').forEach(cell => {
       cell.addEventListener('click', ({ target }) => {
         //target here is the circle because it is the element I click
         //I have to specify target type in typescript to use its props
@@ -47,9 +62,26 @@ export class Connect4 {
       this.checkUpDiagonal(row, col) ||
       this.checkDownDiagonal(row, col)
     ) {
-      console.log(`${this.color.toUpperCase()} won`);
-      this.root.classList.add('finished');
+      this.finish(`${this.color.toUpperCase()} won`, this.color);
+    } else if (row === 0) {
+      this.determineDraw();
     }
+  }
+
+  determineDraw(): void {
+    const isDraw = this.board.every(row => row.every(cell => cell));
+    if (isDraw) {
+      this.finish(`DRAW`, 'gray');
+    }
+  }
+
+  finish(text: string, color: string): void {
+    this.modal.show();
+    this.modal.handlewinner({
+      text,
+      color,
+    });
+    this.root.classList.add('finished');
   }
 
   checkRow(row: number): boolean {
@@ -121,4 +153,14 @@ export class Connect4 {
     }
     return false;
   }
+
+  rematch = (): void => {
+    this.board = this.generateGameBoard();
+    this.color = 'red';
+    this.root.classList.remove('finished');
+    this.modal.hide();
+    this.root.querySelectorAll('.circle').forEach(circle => {
+      circle.className = 'circle';
+    });
+  };
 }

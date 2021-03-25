@@ -11,7 +11,7 @@ html {
 body {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   min-height: 100vh;
   box-sizing: border-box;
@@ -28,8 +28,9 @@ td {
 td .circle {
   width: 100%;
   height: 100%;
-  border-radius: 50%;
   cursor: pointer;
+  overflow: hidden;
+  position: relative;
 }
 
 td .circle.red,
@@ -46,10 +47,68 @@ table.finished {
   pointer-events: none;
 }
 
-.circle.red {
+.circle::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  transform: translateY(-100%);
+}
+
+:is(.circle.red, .circle.blue)::before {
+  transition: 0.3s transform ease-in;
+  transform: translateY(0);
+}
+
+.circle.red::before {
   background-color: red;
 }
 
-.circle.blue {
+.circle.blue::before {
   background-color: blue;
+}
+
+.btn {
+  cursor: pointer;
+  border: none;
+  outline: none;
+  padding: 1rem 1.5rem;
+  color: #333;
+  border-radius: 5px;
+  transition: 0.3s background-color;
+}
+
+.btn:hover {
+  background: #888;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.modal {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(204, 204, 204, 0.404);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-body {
+  background: #cad3c8;
+  min-height: 10rem;
+  min-width: 12rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  padding: 2rem 3rem;
+  border-radius: 10px;
 }
