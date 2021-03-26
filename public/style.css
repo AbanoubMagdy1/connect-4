@@ -60,11 +60,15 @@ table.stop {
   height: 100%;
   border-radius: 50%;
   transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
 }
 
 :is(.circle.red, .circle.blue)::before {
   transition: 0.3s transform ease-in;
   transform: translateY(0);
+  -webkit-transform: translateY(0);
+  -moz-transform: translateY(0);
 }
 
 .circle.red::before {
