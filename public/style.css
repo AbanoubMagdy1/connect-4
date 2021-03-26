@@ -72,11 +72,11 @@ table.stop {
 }
 
 .circle.red::before {
-  background-color: red;
+  background-color: #ff0000;
 }
 
 .circle.blue::before {
-  background-color: blue;
+  background-color: #0000ff;
 }
 
 .btn {
