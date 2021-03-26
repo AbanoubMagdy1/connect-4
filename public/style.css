@@ -64,7 +64,8 @@ table.stop {
   -moz-transform: translateY(-100%);
 }
 
-:is(.circle.red, .circle.blue)::before {
+.circle.red::before,
+.circle.blue::before {
   transition: 0.3s transform ease-in;
   transform: translateY(0);
   -webkit-transform: translateY(0);
