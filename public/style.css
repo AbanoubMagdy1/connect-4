@@ -27,6 +27,7 @@ td {
   height: 70px;
   border: 1px solid black;
   margin: 4px;
+  border-radius: 50%;
 }
 
 td .circle {
