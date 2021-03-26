@@ -1,6 +1,6 @@
 import { Connect4 } from './Connect4.js';
 import { Modal } from './Modal.js';
-const Socket = io.connect('https://connect4-rho.vercel.app');
+const Socket = io.connect('/');
 export class OnlineConnect4 extends Connect4 {
     constructor(root, modal) {
         super();
