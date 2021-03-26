@@ -3,14 +3,18 @@
   "version": "1.0.0",
   "description": "connect4 game with offline and online modes",
   "main": "index.js",
-  "type" : "module",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "dev" : "nodemon index.js"
   },
   "author": "Abanoub Magdy",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
     "socket.io": "^4.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }

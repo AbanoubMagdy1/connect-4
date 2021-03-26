@@ -153,17 +153,21 @@
     <div class="modal" id="modal">
         <div class="modal-body">
             <h1 class="winner"></h1>
+            <div class="loader hidden">
+                <div class="spinner"></div>
+            </div>            
             <div class="btns-start">
                 <button class="btn" id="online">Play online</button>
                 <button class="btn" id="offline">Play offline</button>
             </div>
             <div class="btns-rematch hidden">
+                <button class="btn" id="find">Find Player</button>
                 <button class="btn" id="rematch">Rematch</button>
                 <button class="btn" id="change">Change Mode</button>
             </div>
         </div>
     </div>
-
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
     <script type="module" src="./build/index.js"></script>
 </body>
 </html>
