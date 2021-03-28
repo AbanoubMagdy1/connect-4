@@ -1,7 +1,6 @@
 import { Connect4, Color } from './Connect4.js';
 import { Modal } from './Modal.js';
-
-const Socket = io.connect('/');
+import { Socket } from './index.js';
 
 export class OnlineConnect4 extends Connect4 {
   public color: Color = 'red';
@@ -9,6 +8,7 @@ export class OnlineConnect4 extends Connect4 {
   public rematch: boolean = false;
   public opponentRematch = false;
   public opponentId: string;
+  public pairing: boolean = false;
 
   static createConnect4({ root, modal }): OnlineConnect4 {
     return new OnlineConnect4(
@@ -20,11 +20,13 @@ export class OnlineConnect4 extends Connect4 {
   constructor(public root: Element, public modal: Modal) {
     super();
     this.modal.hideStartAndShowHandlers();
-
+    this.modal.handleRematch(true);
     this.modal.rematchBtns
       .querySelector('#rematch')
       .addEventListener('click', () => {
         this.rematch = true;
+        this.modal.handleRematch(true);
+        this.modal.showText({ text: 'Rematch offer sent', color: 'gray' });
         if (this.opponentRematch) {
           Socket.emit('rematch', true);
           this.start();
@@ -40,14 +42,38 @@ export class OnlineConnect4 extends Connect4 {
     this.modal.rematchBtns
       .querySelector('#find')
       .addEventListener('click', () => {
-        this.opponentId = '';
-        Socket.emit('pair', '');
-        this.modal.showLoader();
+        if (!this.pairing) {
+          this.opponentId = '';
+          Socket.emit('pair', '');
+          this.modal.handleRematch(true);
+          this.modal.hideFriendGroup();
+          this.modal.handleFriend(true);
+          this.modal.findButtonText('Leave Pairing');
+          this.modal.showLoader();
+          this.pairing = true;
+        } else {
+          Socket.emit('leavePairing', '');
+          this.modal.findButtonText('Find Player');
+          this.modal.hideLoader();
+          this.modal.handleFriend(false);
+          this.pairing = false;
+        }
       });
+
+    this.modal.rematchBtns
+      .querySelector('#friend')
+      .addEventListener('click', () => {
+        Socket.emit('waitfriend', '');
+      });
+
+    Socket.on('waitfriend', id => {
+      this.modal.showFriendGroup();
+      this.modal.friendlink.value = `${window.location.origin}?friendid=${id}`;
+      this.modal.friendlink.select();
+    });
 
     Socket.on('start', ({ color, pairedId }) => {
       this.start();
-      console.log(color);
       this.myColor = color;
       this.opponentId = pairedId;
       if (this.myColor !== this.color) {
@@ -63,26 +89,33 @@ export class OnlineConnect4 extends Connect4 {
       this.handleMove(col);
     });
 
-    Socket.on('rematch', () => {
-      this.modal.handlewinner({
-        text: 'Opponent wants to rematch',
-        color: 'gray',
-      });
-      this.opponentRematch = true;
-      if (this.rematch) {
-        this.start();
-        this.myColor = this.myColor === 'red' ? 'blue' : 'red';
-        if (this.myColor !== this.color) {
-          this.root.classList.add('stop');
+    Socket.on('rematch', id => {
+      if (id === this.opponentId) {
+        this.modal.showText({
+          text: 'Opponent wants to rematch',
+          color: 'gray',
+        });
+        this.opponentRematch = true;
+        if (this.rematch) {
+          this.start();
+          this.myColor = this.myColor === 'red' ? 'blue' : 'red';
+          if (this.myColor !== this.color) {
+            this.root.classList.add('stop');
+          }
         }
       }
+    });
+
+    Socket.on('notfound', () => {
+      this.modal.showText({ text: 'Your friend not found', color: 'gray' });
     });
 
     Socket.on('dis', id => {
       if (id === this.opponentId) {
         this.opponentId = '';
         this.modal.show();
-        this.modal.handlewinner({ text: 'Opponent left', color: 'gray' });
+        this.modal.handleRematch(true);
+        this.modal.showText({ text: 'Opponent left', color: 'gray' });
       }
     });
 
@@ -104,6 +137,8 @@ export class OnlineConnect4 extends Connect4 {
     this.board = this.generateGameBoard();
     this.color = 'red';
     this.root.classList.remove('stop');
+    this.pairing = false;
+    this.modal.findButtonText('Find Player');
     this.modal.hide();
     this.root.querySelectorAll('.circle').forEach(circle => {
       circle.className = 'circle';

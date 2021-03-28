@@ -15,7 +15,8 @@ export class OfflineConnect4 extends Connect4 {
   constructor(public root: Element, public modal: Modal) {
     super();
     this.modal.hide();
-
+    this.modal.offlineMode();
+    this.modal.handleRematch(false);
     this.modal.rematchBtns
       .querySelector('#rematch')
       .addEventListener('click', this.rematch);

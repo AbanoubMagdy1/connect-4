@@ -7,6 +7,8 @@ import {
   pair,
   pairWithFriend,
   disconnect,
+  removeFromFriends,
+  removeFromPairing,
 } from './utils/users.js';
 import cors from 'cors';
 
@@ -28,6 +30,10 @@ io.on('connection', socket => {
   //console.log(socket.handshake.headers.referer.split('=')[1]);
   let pairedWith;
   socket.on('pair', () => {
+    if (pairedWith) {
+      socket.broadcast.to(pairedWith).emit('dis', socket.id);
+    }
+    removeFromFriends(socket.id);
     const paired = pair();
     if (paired) {
       pairedWith = paired;
@@ -44,11 +50,31 @@ io.on('connection', socket => {
   });
 
   socket.on('rematch', () => {
-    socket.broadcast.to(pairedWith).emit('rematch', '');
+    socket.broadcast.to(pairedWith).emit('rematch', socket.id);
   });
 
   socket.on('move', col => {
     socket.broadcast.to(pairedWith).emit('move', col);
+  });
+
+  socket.on('waitfriend', () => {
+    addToFriends(socket.id);
+    socket.emit('waitfriend', socket.id);
+  });
+
+  socket.on('pairwithfriend', id => {
+    const friendid = pairWithFriend(id);
+    if (friendid) {
+      pairedWith = friendid;
+      socket.emit('start', { color: 'blue', pairedId: pairedWith });
+      socket.broadcast.to(pairedWith).emit('paired', socket.id);
+    } else {
+      socket.emit('notfound', '');
+    }
+  });
+
+  socket.on('leavePairing', () => {
+    removeFromPairing(socket.id);
   });
 
   socket.on('disconnect', () => {

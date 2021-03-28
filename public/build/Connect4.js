@@ -41,7 +41,8 @@ export class Connect4 {
     }
     finish(text, color) {
         this.modal.show();
-        this.modal.handlewinner({
+        this.modal.handleRematch(false);
+        this.modal.showText({
             text,
             color,
         });

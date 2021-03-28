@@ -25,9 +25,8 @@ h1 {
 td {
   width: 70px;
   height: 70px;
-  border: 1px solid black;
   margin: 4px;
-  border-radius: 50%;
+  border: 1px solid #2c3283;
 }
 
 td .circle {
@@ -91,7 +90,12 @@ table.stop {
   transition: 0.3s background-color;
 }
 
-.btn:hover {
+.btn[disabled] {
+  cursor: not-allowed;
+  background-color: rgb(93, 97, 107);
+}
+
+.btn:hover:not([disabled]) {
   background: #888;
 }
 
@@ -112,7 +116,7 @@ table.stop {
 }
 
 .modal-body {
-  background: #cad3c8;
+  background: #0e6d16;
   min-height: 10rem;
   min-width: 12rem;
   display: flex;

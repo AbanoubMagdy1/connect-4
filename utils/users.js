@@ -9,6 +9,14 @@ function addToFriends(id) {
   forFriends.push(id);
 }
 
+function removeFromFriends(id) {
+  forFriends = forFriends.filter(f => f !== id);
+}
+
+function removeFromPairing(id) {
+  forPairs = forPairs.filter(f => f !== id);
+}
+
 function pair() {
   return forPairs.pop();
 }
@@ -28,4 +36,12 @@ function disconnect(id) {
   forFriends = forFriends.filter(f => f !== id);
 }
 
-export { pair, pairWithFriend, addToFriends, addToPairing, disconnect };
+export {
+  pair,
+  pairWithFriend,
+  addToFriends,
+  addToPairing,
+  removeFromFriends,
+  removeFromPairing,
+  disconnect,
+};

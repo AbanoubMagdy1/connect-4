@@ -1,3 +1,5 @@
+import { Modal } from './Modal';
+
 export type CellStatus = '' | 'red' | 'blue';
 export type Color = 'red' | 'blue';
 export type Mode = 'offline' | 'online';
@@ -6,7 +8,7 @@ export abstract class Connect4 {
   protected board: CellStatus[][] = this.generateGameBoard();
   abstract color: CellStatus;
   abstract myColor: Color;
-  abstract modal;
+  abstract modal: Modal;
   abstract root: Element;
 
   generateGameBoard(): CellStatus[][] {
@@ -52,7 +54,8 @@ export abstract class Connect4 {
 
   finish(text: string, color: string): void {
     this.modal.show();
-    this.modal.handlewinner({
+    this.modal.handleRematch(false);
+    this.modal.showText({
       text,
       color,
     });

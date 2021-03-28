@@ -17,6 +17,8 @@ export class OfflineConnect4 extends Connect4 {
             });
         };
         this.modal.hide();
+        this.modal.offlineMode();
+        this.modal.handleRematch(false);
         this.modal.rematchBtns
             .querySelector('#rematch')
             .addEventListener('click', this.rematch);
