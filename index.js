@@ -26,8 +26,10 @@ const server = app.listen(PORT, () => {
 
 const io = new Server(server, {});
 
+let userNumber = 0;
 io.on('connection', socket => {
-  //console.log(socket.handshake.headers.referer.split('=')[1]);
+  userNumber++;
+  io.emit('number', userNumber);
   let pairedWith;
   socket.on('pair', () => {
     if (pairedWith) {
@@ -78,7 +80,8 @@ io.on('connection', socket => {
   });
 
   socket.on('disconnect', () => {
-    console.log(socket.id);
+    userNumber--;
+    io.emit('number', userNumber);
     disconnect(socket.id);
     if (pairedWith) {
       socket.broadcast.to(pairedWith).emit('dis', socket.id);

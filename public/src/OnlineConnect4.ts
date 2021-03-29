@@ -1,5 +1,6 @@
 import { Connect4, Color } from './Connect4.js';
 import { Modal } from './Modal.js';
+import { Chat } from './Chat.js';
 import { Socket } from './index.js';
 
 export class OnlineConnect4 extends Connect4 {
@@ -10,14 +11,15 @@ export class OnlineConnect4 extends Connect4 {
   public opponentId: string;
   public pairing: boolean = false;
 
-  static createConnect4({ root, modal }): OnlineConnect4 {
+  static createConnect4({ root, modal, chat }): OnlineConnect4 {
     return new OnlineConnect4(
       document.getElementById(root),
-      new Modal(document.getElementById(modal))
+      new Modal(document.getElementById(modal)),
+      new Chat(document.getElementById(chat))
     );
   }
 
-  constructor(public root: Element, public modal: Modal) {
+  constructor(public root: Element, public modal: Modal, public chat: Chat) {
     super();
     this.modal.hideStartAndShowHandlers();
     this.modal.handleRematch(true);
@@ -114,6 +116,7 @@ export class OnlineConnect4 extends Connect4 {
       if (id === this.opponentId) {
         this.opponentId = '';
         this.modal.show();
+        this.modal.handleFriend(false);
         this.modal.handleRematch(true);
         this.modal.showText({ text: 'Opponent left', color: 'gray' });
       }

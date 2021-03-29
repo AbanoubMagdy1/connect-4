@@ -1,11 +1,13 @@
 import { Connect4 } from './Connect4.js';
 import { Modal } from './Modal.js';
+import { Chat } from './Chat.js';
 import { Socket } from './index.js';
 export class OnlineConnect4 extends Connect4 {
-    constructor(root, modal) {
+    constructor(root, modal, chat) {
         super();
         this.root = root;
         this.modal = modal;
+        this.chat = chat;
         this.color = 'red';
         this.myColor = 'red';
         this.rematch = false;
@@ -112,6 +114,7 @@ export class OnlineConnect4 extends Connect4 {
             if (id === this.opponentId) {
                 this.opponentId = '';
                 this.modal.show();
+                this.modal.handleFriend(false);
                 this.modal.handleRematch(true);
                 this.modal.showText({ text: 'Opponent left', color: 'gray' });
             }
@@ -127,8 +130,8 @@ export class OnlineConnect4 extends Connect4 {
             });
         });
     }
-    static createConnect4({ root, modal }) {
-        return new OnlineConnect4(document.getElementById(root), new Modal(document.getElementById(modal)));
+    static createConnect4({ root, modal, chat }) {
+        return new OnlineConnect4(document.getElementById(root), new Modal(document.getElementById(modal)), new Chat(document.getElementById(chat)));
     }
     handleMove(col) {
         const row = this.cellToBeUsed(col);

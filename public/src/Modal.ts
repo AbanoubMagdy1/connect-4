@@ -12,6 +12,7 @@ export class Modal {
   public loader: HTMLElement;
   public friendGroup: HTMLElement;
   public friendlink: HTMLInputElement;
+
   constructor(public modal: Element) {
     this.winner = modal.querySelector('.winner');
     this.startBtns = modal.querySelector('.btns-start');

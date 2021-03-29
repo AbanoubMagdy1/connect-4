@@ -42,6 +42,7 @@ export class Connect4 {
     finish(text, color) {
         this.modal.show();
         this.modal.handleRematch(false);
+        this.modal.handleFriend(false);
         this.modal.showText({
             text,
             color,

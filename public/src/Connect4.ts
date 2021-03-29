@@ -55,6 +55,7 @@ export abstract class Connect4 {
   finish(text: string, color: string): void {
     this.modal.show();
     this.modal.handleRematch(false);
+    this.modal.handleFriend(false);
     this.modal.showText({
       text,
       color,

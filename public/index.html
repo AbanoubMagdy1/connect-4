@@ -152,15 +152,16 @@
 
     <div class="modal" id="modal">
         <div class="modal-body">
-            <h1 class="winner"></h1>
+            <h2 class="winner"></h2>
+            <h3>Number of online player : <span id="number">loading...</span></h3>
             <div class="loader hidden">
                 <div class="spinner"></div>
             </div>            
-            <div class="btns-start">
+            <div class="btns btns-start">
                 <button class="btn" id="online">Play online</button>
                 <button class="btn" id="offline">Play offline</button>
             </div>
-            <div class="btns-rematch hidden">
+            <div class="btns btns-rematch hidden">
                 <button class="btn" id="find">Find Player</button>
                 <button class="btn" id="rematch">Rematch</button>
                 <button class="btn" id="friend">Play with Friend</button>
@@ -171,6 +172,11 @@
                 <input id="friendlink" type="text"/>
             </div>
         </div>
+    </div>
+
+    <div class="chat hidden" id="chat">
+        <button class="btn" id="toggle">CHAT</button>
+        <div class="chat-body"></div>
     </div>
     <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
     <script type="module" src="./build/index.js"></script>
