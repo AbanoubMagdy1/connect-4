@@ -10,6 +10,7 @@ html {
 
 body {
   display: flex;
+  background-color: #eee;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -87,6 +88,7 @@ table.stop {
 }
 
 .btn {
+  font-size: 20px;
   cursor: pointer;
   border: none;
   outline: none;
@@ -116,7 +118,7 @@ table.stop {
   bottom: 0;
   left: 0;
   right: 0;
-  background: rgba(204, 204, 204, 0.404);
+  background: rgba(204, 204, 204, 0.704);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -173,6 +175,10 @@ table.stop {
   margin-bottom: 1rem;
 }
 
+input {
+  font-size: 20px;
+}
+
 .link-to-friend input {
   width: 100%;
   height: 40px;
@@ -187,8 +193,8 @@ table.stop {
   top: 0;
   bottom: 0;
   right: 0;
-  width: 20rem;
-  background-color: #aaa;
+  width: 22rem;
+  background-color: white;
   transition: 0.3s transform ease-in;
   transform: translateX(100%);
 }
@@ -204,10 +210,77 @@ table.stop {
   transform: translateX(-98%);
   margin: 0;
   border-radius: 0;
-  background-color: #aaa;
+  background-color: white;
   border: 1px solid black;
   border-right: none;
   padding: 10px;
+  position: relative;
+}
+
+.chat .btn .badge {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 2px;
+  right: 2px;
+  width: 15px;
+  height: 15px;
+  color: white;
+  border-radius: 50%;
+  padding: 15px;
+  background-color: rgb(223, 8, 8);
+}
+
+.chat-body {
+  height: 100%;
+}
+
+.chat-messages {
+  height: 84%;
+  padding: 1rem 0.5rem;
+  overflow-y: scroll;
+}
+
+.chat-messages .msg {
+  padding: 15px;
+  max-width: 90%;
+  border-radius: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 1rem;
+}
+
+.chat-messages .msg.sent {
+  margin-left: auto;
+  background-color: rgb(26, 139, 173);
+  color: white;
+}
+
+.chat-messages .msg.recieved {
+  background-color: #ddd;
+}
+
+.send-group {
+  display: flex;
+  margin-left: 1rem;
+}
+
+.send-group button {
+  cursor: pointer;
+  padding: 5px;
+  outline: none;
+  border: none;
+  color: white;
+  background-color: #333;
+}
+
+.send-group input {
+  outline: none;
+  border: 1px solid rgb(57, 57, 197);
+  width: 80%;
+  height: 2.5rem;
+  padding: 10px;
+  background-color: #ddd;
 }
 
 @keyframes spinner {
@@ -232,5 +305,26 @@ table.stop {
 
   .modal-body .btns {
     flex-direction: column;
+  }
+
+  .chat {
+    top: initial;
+    bottom: 0 !important;
+    width: 100%;
+    height: 80%;
+    transform: translateY(100%);
+  }
+
+  .chat.show {
+    transform: translateY(0);
+  }
+
+  .chat .btn {
+    top: 0;
+    left: 1.5rem;
+    transform: translateY(-98%);
+    border-bottom: none;
+    padding: 10px;
+    position: relative;
   }
 }

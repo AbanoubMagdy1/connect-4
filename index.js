@@ -60,6 +60,7 @@ io.on('connection', socket => {
   });
 
   socket.on('waitfriend', () => {
+    removeFromPairing(socket.id);
     addToFriends(socket.id);
     socket.emit('waitfriend', socket.id);
   });
@@ -77,6 +78,10 @@ io.on('connection', socket => {
 
   socket.on('leavePairing', () => {
     removeFromPairing(socket.id);
+  });
+
+  socket.on('chat', msg => {
+    socket.broadcast.to(pairedWith).emit('chat', msg);
   });
 
   socket.on('disconnect', () => {
