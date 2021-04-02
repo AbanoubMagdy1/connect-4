@@ -50,10 +50,12 @@ export class Chat {
   };
 
   handleSendMessage = (): void => {
-    const msg = this.inputMsg.value;
-    this.addMessage(msg, 'sent');
-    this.inputMsg.value = '';
-    Socket.emit('chat', msg);
+    if (this.inputMsg.value.trim()) {
+      const msg = this.inputMsg.value;
+      this.addMessage(msg, 'sent');
+      this.inputMsg.value = '';
+      Socket.emit('chat', msg);
+    }
   };
 
   displayBadge = () => {

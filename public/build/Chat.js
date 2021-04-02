@@ -15,10 +15,12 @@ export class Chat {
             this.container.append(template.content);
         };
         this.handleSendMessage = () => {
-            const msg = this.inputMsg.value;
-            this.addMessage(msg, 'sent');
-            this.inputMsg.value = '';
-            Socket.emit('chat', msg);
+            if (this.inputMsg.value.trim()) {
+                const msg = this.inputMsg.value;
+                this.addMessage(msg, 'sent');
+                this.inputMsg.value = '';
+                Socket.emit('chat', msg);
+            }
         };
         this.displayBadge = () => {
             this.badge.classList.remove('hidden');

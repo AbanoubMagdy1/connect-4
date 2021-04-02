@@ -318,6 +318,12 @@ footer {
     margin: auto;
   }
 
+  .btn:not(.btn-chat.btn) {
+    margin: 0.2rem 1rem;
+    width: 80%;
+    font-size: 16px;
+  }
+
   td {
     width: 60px;
     height: 60px;
@@ -337,6 +343,7 @@ footer {
 
   .chat.show {
     transform: translateY(0);
+    padding-bottom: 2rem;
   }
 
   .chat .btn {
@@ -344,8 +351,6 @@ footer {
     left: 1.5rem;
     transform: translateY(-98%);
     border-bottom: none;
-    padding: 10px;
-    position: relative;
   }
 
   footer {
