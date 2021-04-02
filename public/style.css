@@ -283,6 +283,22 @@ input {
   background-color: #ddd;
 }
 
+footer {
+  font-family: monospace;
+  position: absolute;
+  font-size: 24px;
+  z-index: -100;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 6rem;
+  padding: 2rem;
+  color: white;
+  background-color: rgb(22, 97, 28);
+  display: flex;
+  align-items: center;
+}
+
 @keyframes spinner {
   0% {
     -webkit-transform: rotate(0deg);
