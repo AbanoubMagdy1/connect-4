@@ -17,7 +17,7 @@ body {
   min-height: 100vh;
   box-sizing: border-box;
   font-family: 'Courier New', Courier, monospace;
-  overflow: hidden;
+  overflow-y: hidden;
 }
 
 h1 {
