@@ -334,10 +334,9 @@ footer {
   }
 
   .chat {
-    top: initial;
+    top: 100px;
     bottom: 0 !important;
     width: 100%;
-    height: 80%;
     transform: translateY(100%);
   }
 
@@ -351,6 +350,7 @@ footer {
     left: 1.5rem;
     transform: translateY(-98%);
     border-bottom: none;
+    border-left: 1px solid black;
   }
 
   footer {
