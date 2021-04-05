@@ -13,6 +13,7 @@ export class Chat {
       <div class="msg ${className}">${msg}</div>
     `;
             this.container.append(template.content);
+            this.container.scrollTop = this.container.scrollHeight;
         };
         this.handleSendMessage = () => {
             if (this.inputMsg.value.trim()) {

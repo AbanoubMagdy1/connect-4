@@ -6,6 +6,8 @@ interface Winner {
 type FindButtonText = 'Find Player' | 'Leave Pairing';
 
 export class Modal {
+  public modalBody: HTMLDivElement;
+  public hideBtn: HTMLButtonElement;
   protected winner: HTMLElement;
   protected startBtns: HTMLElement;
   public rematchBtns: HTMLElement;
@@ -14,12 +16,19 @@ export class Modal {
   public friendlink: HTMLInputElement;
 
   constructor(public modal: Element) {
+    this.modalBody = modal.querySelector('.modal-body');
+    this.hideBtn = modal.querySelector('#hide');
     this.winner = modal.querySelector('.winner');
     this.startBtns = modal.querySelector('.btns-start');
     this.rematchBtns = modal.querySelector('.btns-rematch');
     this.loader = modal.querySelector('.loader');
     this.friendGroup = modal.querySelector('.link-to-friend');
     this.friendlink = modal.querySelector('#friendlink');
+
+    this.hideBtn.classList.remove('hidden');
+
+    this.hideBtn.addEventListener('click', this.hideBody);
+
     this.rematchBtns.querySelector('#change').addEventListener('click', () => {
       window.location.reload();
     });
@@ -36,6 +45,13 @@ export class Modal {
     this.modal.classList.add('hidden');
     this.startBtns.classList.add('hidden');
   }
+
+  hideBody = () => {
+    this.hideBtn.textContent = this.modalBody.classList.contains('hidden')
+      ? 'Hide'
+      : 'Show';
+    this.modalBody.classList.toggle('hidden');
+  };
 
   showLoader(): void {
     this.loader.classList.remove('hidden');

@@ -125,6 +125,14 @@ table.stop {
   align-items: center;
 }
 
+.modal #hide {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  cursor: pointer;
+  padding: 10px;
+}
+
 .modal-body {
   background: #bbb;
   min-height: 10rem;

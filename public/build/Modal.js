@@ -1,12 +1,22 @@
 export class Modal {
     constructor(modal) {
         this.modal = modal;
+        this.hideBody = () => {
+            this.hideBtn.textContent = this.modalBody.classList.contains('hidden')
+                ? 'Hide'
+                : 'Show';
+            this.modalBody.classList.toggle('hidden');
+        };
+        this.modalBody = modal.querySelector('.modal-body');
+        this.hideBtn = modal.querySelector('#hide');
         this.winner = modal.querySelector('.winner');
         this.startBtns = modal.querySelector('.btns-start');
         this.rematchBtns = modal.querySelector('.btns-rematch');
         this.loader = modal.querySelector('.loader');
         this.friendGroup = modal.querySelector('.link-to-friend');
         this.friendlink = modal.querySelector('#friendlink');
+        this.hideBtn.classList.remove('hidden');
+        this.hideBtn.addEventListener('click', this.hideBody);
         this.rematchBtns.querySelector('#change').addEventListener('click', () => {
             window.location.reload();
         });
