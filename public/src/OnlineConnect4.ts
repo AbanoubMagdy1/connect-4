@@ -124,12 +124,13 @@ export class OnlineConnect4 extends Connect4 {
 
     this.root.querySelectorAll('.circle').forEach(cell => {
       cell.addEventListener('click', ({ target }) => {
-        //target here is the circle because it is the element I click
         //I have to specify target type in typescript to use its props
-        const target1 = target as HTMLTableDataCellElement;
-        const col = parseInt(target1.dataset.column);
-        this.handleMove(col);
-        Socket.emit('move', col);
+        if (this.color === this.myColor) {
+          const target1 = target as HTMLTableDataCellElement;
+          const col = parseInt(target1.dataset.column);
+          this.handleMove(col);
+          Socket.emit('move', col);
+        }
       });
     });
   }
