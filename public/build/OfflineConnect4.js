@@ -14,7 +14,7 @@ export class OfflineConnect4 extends Connect4 {
         this.modal.handleRematch(false);
         this.modal.rematchBtns
             .querySelector('#rematch')
-            .addEventListener('click', this.rematch);
+            .addEventListener('click', this.rematch.bind(this));
         this.undoBtn.addEventListener('click', this.undo.bind(this));
         this.root.querySelectorAll('.circle').forEach(cell => {
             cell.addEventListener('click', ({ target }) => {
@@ -44,6 +44,8 @@ export class OfflineConnect4 extends Connect4 {
         this.color = 'red';
         this.root.classList.remove('stop');
         this.modal.hide();
+        this.moves = [];
+        this.undoBtn.disabled = true;
         this.root.querySelectorAll('.circle').forEach(circle => {
             circle.className = 'circle';
         });
