@@ -16,12 +16,13 @@ export class OfflineConnect4 extends Connect4 {
 
   constructor(public root: Element, public modal: Modal, public undoBtn) {
     super();
+    this.moves = []
     this.modal.hide();
     this.modal.offlineMode();
     this.modal.handleRematch(false);
     this.modal.rematchBtns
       .querySelector('#rematch')
-      .addEventListener('click', this.rematch);
+      .addEventListener('click', this.rematch.bind(this));
 
     this.undoBtn.addEventListener('click', this.undo.bind(this))
 
