@@ -1,27 +1,21 @@
 import { Connect4 } from './Connect4.js';
 import { Modal } from './Modal.js';
 export class OfflineConnect4 extends Connect4 {
-    constructor(root, modal) {
+    constructor(root, modal, undoBtn) {
         super();
         this.root = root;
         this.modal = modal;
+        this.undoBtn = undoBtn;
         this.color = 'red';
         this.myColor = 'red';
-        this.rematch = () => {
-            this.board = this.generateGameBoard();
-            this.color = 'red';
-            this.root.classList.remove('stop');
-            this.modal.hide();
-            this.root.querySelectorAll('.circle').forEach(circle => {
-                circle.className = 'circle';
-            });
-        };
+        this.moves = [];
         this.modal.hide();
         this.modal.offlineMode();
         this.modal.handleRematch(false);
         this.modal.rematchBtns
             .querySelector('#rematch')
             .addEventListener('click', this.rematch);
+        this.undoBtn.addEventListener('click', this.undo.bind(this));
         this.root.querySelectorAll('.circle').forEach(cell => {
             cell.addEventListener('click', ({ target }) => {
                 //target here is the circle because it is the element I click
@@ -34,13 +28,40 @@ export class OfflineConnect4 extends Connect4 {
                     this.root
                         .querySelector(`[data-row='${row}'][data-column='${col}']`)
                         .classList.add(this.color);
+                    this.moves.push([row, col]);
+                    this.undoBtn.disabled = false;
                     this.determineWin(row, col, 'offline');
-                    this.color = this.color === 'red' ? 'blue' : 'red';
+                    this.color = this.swapColor();
                 }
             });
         });
     }
     static createConnect4({ root, modal }) {
-        return new OfflineConnect4(document.getElementById(root), new Modal(document.getElementById(modal)));
+        return new OfflineConnect4(document.getElementById(root), new Modal(document.getElementById(modal)), document.getElementById("undo"));
+    }
+    rematch() {
+        this.board = this.generateGameBoard();
+        this.color = 'red';
+        this.root.classList.remove('stop');
+        this.modal.hide();
+        this.root.querySelectorAll('.circle').forEach(circle => {
+            circle.className = 'circle';
+        });
+    }
+    ;
+    undo() {
+        if (this.moves.length) {
+            const [row, col] = this.moves.pop();
+            this.board[row][col] = '';
+            this.root
+                .querySelector(`[data-row='${row}'][data-column='${col}']`).className = 'circle';
+        }
+        this.color = this.swapColor();
+        if (!this.moves.length) {
+            this.undoBtn.disabled = true;
+        }
+    }
+    swapColor() {
+        return this.color === 'red' ? 'blue' : 'red';
     }
 }

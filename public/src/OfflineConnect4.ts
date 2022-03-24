@@ -4,15 +4,17 @@ import { Modal } from './Modal.js';
 export class OfflineConnect4 extends Connect4 {
   public color: Color = 'red';
   public myColor: Color = 'red';
+  public moves : number[][] = [];
 
   static createConnect4({ root, modal }): OfflineConnect4 {
     return new OfflineConnect4(
       document.getElementById(root),
-      new Modal(document.getElementById(modal))
+      new Modal(document.getElementById(modal)),
+      document.getElementById("undo") as HTMLButtonElement
     );
   }
 
-  constructor(public root: Element, public modal: Modal) {
+  constructor(public root: Element, public modal: Modal, public undoBtn) {
     super();
     this.modal.hide();
     this.modal.offlineMode();
@@ -20,6 +22,8 @@ export class OfflineConnect4 extends Connect4 {
     this.modal.rematchBtns
       .querySelector('#rematch')
       .addEventListener('click', this.rematch);
+
+    this.undoBtn.addEventListener('click', this.undo.bind(this))
 
     this.root.querySelectorAll('.circle').forEach(cell => {
       cell.addEventListener('click', ({ target }) => {
@@ -33,14 +37,16 @@ export class OfflineConnect4 extends Connect4 {
           this.root
             .querySelector(`[data-row='${row}'][data-column='${col}']`)
             .classList.add(this.color);
+          this.moves.push([row, col])
+          this.undoBtn.disabled = false  
           this.determineWin(row, col, 'offline');
-          this.color = this.color === 'red' ? 'blue' : 'red';
+          this.color = this.swapColor()
         }
       });
     });
   }
 
-  rematch = (): void => {
+  rematch(): void  {
     this.board = this.generateGameBoard();
     this.color = 'red';
     this.root.classList.remove('stop');
@@ -49,4 +55,23 @@ export class OfflineConnect4 extends Connect4 {
       circle.className = 'circle';
     });
   };
+
+  undo(): void{
+    if(this.moves.length){
+      const [row, col] = this.moves.pop();
+      this.board[row][col] = '';
+      this.root
+      .querySelector(`[data-row='${row}'][data-column='${col}']`).className = 'circle'
+    }
+
+    this.color = this.swapColor()
+
+    if(!this.moves.length){
+      this.undoBtn.disabled = true;
+    }
+  }
+
+  swapColor(): Color{
+    return this.color === 'red' ? 'blue' : 'red'
+  }
 }
