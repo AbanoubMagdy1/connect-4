@@ -10,6 +10,7 @@ html {
 
 body {
   display: flex;
+  overflow: hidden;
   background-color: #eee;
   flex-direction: column;
   justify-content: flex-start;
@@ -367,9 +368,6 @@ footer {
     border-right: 1px solid black;
   }
 
-  footer {
-    display: none;
-  }
 }
 
 @media (max-width: 1100px){

@@ -24,6 +24,7 @@ export class OfflineConnect4 extends Connect4 {
       .addEventListener('click', this.rematch.bind(this));
 
     this.undoBtn.addEventListener('click', this.undo.bind(this))
+    this.undoBtn.classList.remove("hidden");
 
     this.root.querySelectorAll('.circle').forEach(cell => {
       cell.addEventListener('click', ({ target }) => {

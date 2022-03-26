@@ -16,6 +16,7 @@ export class OfflineConnect4 extends Connect4 {
             .querySelector('#rematch')
             .addEventListener('click', this.rematch.bind(this));
         this.undoBtn.addEventListener('click', this.undo.bind(this));
+        this.undoBtn.classList.remove("hidden");
         this.root.querySelectorAll('.circle').forEach(cell => {
             cell.addEventListener('click', ({ target }) => {
                 //target here is the circle because it is the element I click
