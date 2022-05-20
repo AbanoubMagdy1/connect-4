@@ -10,7 +10,7 @@ html {
 
 body {
   display: flex;
-  overflow: hidden;
+  overflow-x: hidden;
   background-color: #eee;
   flex-direction: column;
   justify-content: flex-start;
@@ -32,10 +32,12 @@ h2 {
 }
 
 td {
-  width: 90px;
-  height: 90px;
+  width: 75px;
+  height: 75px;
   margin: 4px;
-  border: 1px solid #2c3283;
+  overflow: hidden;
+  border-radius: 50%;
+  background-color: #eee;
 }
 
 td .circle {
@@ -53,7 +55,9 @@ td .circle.blue {
 }
 
 table {
-  border-spacing: 1px;
+  border-spacing: 10px;
+  background-color: #444;
+  margin-bottom: 3rem;
 }
 
 table.stop {
@@ -72,22 +76,41 @@ table.stop {
   -webkit-transform: translateY(-100%);
   -moz-transform: translateY(-100%);
   transition: 0.3s all ease-in;
+}
 
+.circle::after {
+  content: '';
+  position: absolute;
+  inset: 20%;
+  border-radius: 50%;
+  opacity: 0;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.7);
+  transform: translateY(-100%);
+  -webkit-transform: translateY(-100%);
+  -moz-transform: translateY(-100%);
+  transition: 0.3s all ease-in;
 }
 
 .circle.red::before,
-.circle.blue::before {
+.circle.blue::before, 
+.circle.red::after, 
+.circle.blue::after {
   transform: translateY(0);
   -webkit-transform: translateY(0);
   -moz-transform: translateY(0);
 }
 
+.circle.red::after, 
+.circle.blue::after{
+  opacity: 1;
+}
+
 .circle.red::before {
-  background: #ff0000;
+  background: #F32424;
 }
 
 .circle.blue::before {
-  background: #0000ff;
+  background: #2155CD;
 }
 
 .btn {
@@ -304,14 +327,10 @@ input {
 
 footer {
   font-family: monospace;
-  position: absolute;
+  width: 100%;
+  margin-top: auto;
   font-size: 24px;
-  z-index: -100;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 3rem;
-  padding: 2rem;
+  padding: 1rem;
   color: white;
   background-color: rgb(22, 97, 28);
   display: flex;
