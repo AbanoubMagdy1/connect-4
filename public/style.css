@@ -328,9 +328,8 @@ input {
 footer {
   font-family: monospace;
   width: 100%;
-  margin-top: auto;
   font-size: 24px;
-  padding: 1rem;
+  padding: 1rem 3rem;
   color: white;
   background-color: rgb(22, 97, 28);
   display: flex;
@@ -387,6 +386,37 @@ footer {
     border-right: 1px solid black;
   }
 
+}
+
+.footer{
+  margin-top: auto;
+  width: 100%;
+}
+/*============================*/
+/*======Add Home Section======*/
+/*============================*/
+
+
+
+.add-home {
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  display: flex;
+  align-items: center;
+  background: #5b7bc7;
+  width: 100%;
+  padding: .3rem 2rem;
+  display: none;
+}
+
+.add-home.show{
+  display: flex;
+}
+
+.add-home .close{
+  cursor: pointer;
+  color: white;
+  margin-left: auto;
+  font-size: 2rem;
 }
 
 @media (max-width: 1100px){

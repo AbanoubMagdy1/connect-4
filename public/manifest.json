@@ -1,0 +1,20 @@
+{
+    "name": "Connect4",
+    "short_name": "Connect4",
+    "start_url": "index.html",
+    "display": "standalone",
+    "theme_color": "#3272d9",
+    "background_color": "#3272d9",
+    "icons": [
+        {
+            "src": "icon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icon.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+}
